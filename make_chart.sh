@@ -30,10 +30,11 @@ temp_folder="fio_generate_plots.$$"
 mkdir -p $temp_folder && cd $temp_folder
 
 ln -s ../$input_file .
-cmd="fio_generate_plots $(echo $input_file | cut -d_ -f1)"
+cmd="fio_generate_plots \"chart\" ${input_file%_*}"
 echo $cmd
 eval $cmd >/dev/null 2>&1
 
+[ "chart-${output_file##*-}" != "$output_file" ] && mv chart-${output_file##*-} $output_file
 cp $output_file ..
 
 if [ "$?" = "0" ]; then
